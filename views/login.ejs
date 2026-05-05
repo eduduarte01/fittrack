@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - FitTrack</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<div class="auth-wrapper">
+  <div class="card auth-card">
+    <h1>Bem-vindo de volta 👋</h1>
+    <p class="subtitle">Entre na sua conta FitTrack</p>
+
+    <% if (messages.error) { %>
+      <div class="alert alert-error"><%= messages.error %></div>
+    <% } %>
+    <% if (messages.success) { %>
+      <div class="alert alert-success"><%= messages.success %></div>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" placeholder="voce@email.com" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" name="password" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="btn btn-block">Entrar</button>
+    </form>
+
+    <p class="footer-link">
+      Não tem conta? <a href="/register">Cadastre-se</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
