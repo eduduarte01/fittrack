@@ -1,0 +1,82 @@
+<div class="profile-wrapper">
+  <div class="card profile-card">
+    <h1>Editar Perfil</h1>
+    <p class="subtitle">Atualize suas informações pessoais</p>
+
+    <%- include('../partials/alerts') %>
+
+    <form action="/profile/edit" method="POST" enctype="multipart/form-data">
+
+      <div class="avatar-section">
+        <img
+          src="/uploads/profiles/<%= (typeof user !== 'undefined' && user.profilePicture) ? user.profilePicture : 'default-profile.png' %>"
+          alt="Foto de perfil"
+          class="avatar-preview"
+          id="avatarPreview"
+        />
+        <div class="avatar-actions">
+          <label for="profilePicture" class="btn btn-outline">Trocar foto</label>
+          <input
+            type="file"
+            id="profilePicture"
+            name="profilePicture"
+            accept="image/*"
+            class="file-input"
+          />
+          <span class="hint">JPG ou PNG, até 2MB</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username">Nome de Usuário</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Ex: joao_fit"
+          value="<%= (typeof user !== 'undefined' && user.username) ? user.username : '' %>"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="fullName">Nome Completo</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          placeholder="Seu nome completo"
+          value="<%= (typeof user !== 'undefined' && user.fullName) ? user.fullName : '' %>"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="bio">Biografia</label>
+        <textarea
+          id="bio"
+          name="bio"
+          rows="4"
+          maxlength="255"
+          placeholder="Conte um pouco sobre você e seus objetivos..."
+        ><%= (typeof user !== 'undefined' && user.bio) ? user.bio : '' %></textarea>
+        <span class="hint">Máximo de 255 caracteres</span>
+      </div>
+
+      <div class="form-actions">
+        <a href="/feed" class="btn btn-outline">Cancelar</a>
+        <button type="submit" class="btn">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const fileInput = document.getElementById('profilePicture');
+  const preview = document.getElementById('avatarPreview');
+  if (fileInput && preview) {
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) preview.src = URL.createObjectURL(file);
+    });
+  }
+</script>

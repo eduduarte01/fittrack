@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <%- include("../partials/head", {
+    title: typeof title !== 'undefined' ? title : 'FitTrack'
+  }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/navbar") %>
+
+  <main>
+    <%- body %>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+</body>
+</html>

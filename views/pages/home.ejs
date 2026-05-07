@@ -1,0 +1,85 @@
+<main class="container">
+
+  <%- include('../partials/alerts') %>
+
+  <section class="page-header">
+    <div>
+      <h1>Olá<%= typeof user !== 'undefined' && user ? ', ' + (user.fullName || user.username) : '' %> 👋</h1>
+      <p>Bora treinar? Encontre seu próximo treino abaixo.</p>
+    </div>
+  </section>
+
+  <form action="/feed" method="GET" class="search-form">
+    <input
+      type="text"
+      name="q"
+      placeholder="🔍 Buscar treino por nome..."
+      value="<%= typeof q !== 'undefined' ? q : '' %>"
+    />
+    <button type="submit" class="btn">Buscar</button>
+  </form>
+
+  <section class="feed-section">
+    <h2 class="section-title">Recomendações para você</h2>
+    <% if (typeof recommendations !== 'undefined' && recommendations.length > 0) { %>
+      <div class="workout-grid">
+        <% recommendations.forEach(function(w) { %>
+          <article class="workout-card">
+            <h3><%= w.title %></h3>
+            <p class="meta"><%= w.category ? w.category.name : 'Sem categoria' %></p>
+            <p class="card-desc"><%= (w.description || '').substring(0, 100) %><%= (w.description || '').length > 100 ? '...' : '' %></p>
+            <div class="actions">
+              <a href="/workouts/<%= w.id %>" class="btn btn-sm">Ver detalhes</a>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        <h3>Sem recomendações ainda</h3>
+        <p>Treine mais para receber recomendações personalizadas.</p>
+      </div>
+    <% } %>
+  </section>
+
+  <section class="feed-section">
+    <h2 class="section-title">Categorias</h2>
+    <div class="chip-row">
+      <a href="/feed" class="chip <%= !(typeof selectedCategory !== 'undefined' && selectedCategory) ? 'active' : '' %>">Todas</a>
+      <% if (typeof categories !== 'undefined') { %>
+        <% categories.forEach(function(cat) { %>
+          
+            href="/feed?category=<%= cat.id %>"
+            class="chip <%= (typeof selectedCategory !== 'undefined' && String(selectedCategory) === String(cat.id)) ? 'active' : '' %>"
+          >
+            <%= cat.name %>
+          </a>
+        <% }) %>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="feed-section">
+    <h2 class="section-title">Lista de Treinos</h2>
+    <% if (typeof workouts !== 'undefined' && workouts.length > 0) { %>
+      <div class="workout-grid">
+        <% workouts.forEach(function(w) { %>
+          <article class="workout-card">
+            <h3><%= w.title %></h3>
+            <p class="meta"><%= w.category ? w.category.name : 'Sem categoria' %></p>
+            <p class="card-desc"><%= (w.description || '').substring(0, 120) %><%= (w.description || '').length > 120 ? '...' : '' %></p>
+            <div class="actions">
+              <a href="/workouts/<%= w.id %>" class="btn btn-sm">Ver detalhes</a>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        <h3>Nenhum treino encontrado</h3>
+        <p>Tente ajustar a busca ou escolher outra categoria.</p>
+      </div>
+    <% } %>
+  </section>
+
+</main>

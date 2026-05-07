@@ -1,44 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - FitTrack</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+
+<%- include('../partials/head', {
+  title: 'Cadastro - FitTrack'
+}) %>
+
 <body>
 <div class="auth-wrapper">
   <div class="card auth-card">
     <h1>Crie sua conta</h1>
     <p class="subtitle">Comece a registrar seus treinos hoje</p>
 
-    <% if (messages.error) { %>
-      <div class="alert alert-error"><%= messages.error %></div>
-    <% } %>
+    <%- include('../partials/alerts') %>
 
     <form action="/register" method="POST">
+
       <div class="form-group">
         <label for="fullName">Nome Completo</label>
         <input type="text" name="fullName" placeholder="Seu nome completo" required />
       </div>
+
       <div class="form-group">
         <label for="username">Usuário</label>
         <input type="text" name="username" placeholder="Ex: joao_fit" required />
       </div>
+
       <div class="form-group">
         <label for="email">E-mail</label>
         <input type="email" name="email" placeholder="voce@email.com" required />
       </div>
+
       <div class="group-row" style="display: flex; gap: 10px;">
-          <div class="form-group">
-            <label for="password">Senha</label>
-            <input type="password" name="password" required />
-          </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirmar</label>
-            <input type="password" name="confirmPassword" required />
-          </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" name="password" required />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar</label>
+          <input type="password" name="confirmPassword" required />
+        </div>
       </div>
+
       <button type="submit" class="btn btn-block">Criar conta</button>
     </form>
 
