@@ -46,6 +46,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/', userRouter);
 
+// health check
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status:'OK',
+    message : 'Server is running',
+    timeStamp: new Date().toISOString()
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -65,8 +74,8 @@ const User = require('./modules/user/userModel');
 const Category = require('./modules/categoria/categoryModel');
 const Workout = require('./modules/workout/workoutModel');
 const Comment = require('./modules/comentarios/commentsModel');
-const Rating = require('./modules/rating/ratingModel');
 const UserWorkout = require('./modules/userWorkout/userWorkoutModel');
+const { timeStamp } = require('console');
 
 sequelize.sync()
 .then(()=>console.log('Banco de dados sincronizado!'))
