@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <%- include("../partials/head", { title: title }) %>
+</head>
+<body>
+  <%- include("../partials/navbar") %>
+  <main class="container">
+    <h1><%= title %></h1>
+    <div class="workout-grid">
+      <% if (workouts && workouts.length > 0) { %>
+        <% workouts.forEach(function(w) { %>
+          <article class="workout-card">
+            <h3><%= w.title %></h3>
+            <p class="meta">Categoria: <%= w.category ? w.category.name : "Sem categoria" %></p>
+            <p class="card-desc"><%= (w.description || "").substring(0, 120) %><%= (w.description || "").length > 120 ? "..." : "" %></p>
+            <div class="actions">
+              <a href="/workouts/<%= w.id %>" class="btn btn-sm">Ver detalhes</a>
+            </div>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <p>Nenhum treino encontrado.</p>
+      <% } %>
+    </div>
+  </main>
+  <%- include("../partials/footer") %>
+</body>
+</html>

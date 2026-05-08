@@ -1,13 +1,14 @@
 <% if (user) { %>
-  <nav class="navbar">
-    <div class="brand">
-      Fit<span>Track</span>
-    </div>
-    <nav>
-      <a href="/feed">Home</a>
-      <a href="/workouts">Treinos</a>
-      <a href="/profile/edit">Perfil</a>
-      <a href="/logout">Sair</a>
-    </nav>
+<nav class="navbar">
+  <a href="/feed" class="brand">
+    Fit<span>Track</span>
+  </a>
+  <nav>
+    <a href="/feed" class="<%= typeof active !== 'undefined' && active === 'home' ? 'active' : '' %>">Home</a>
+    <a href="/workouts" class="<%= typeof active !== 'undefined' && active === 'treinos' ? 'active' : '' %>">Treinos</a>
+    <a href="/workouts/create" class="<%= typeof active !== 'undefined' && active === 'criar' ? 'active' : '' %>">Criar</a>
+    <a href="/profile/edit" class="<%= typeof active !== 'undefined' && active === 'perfil' ? 'active' : '' %>">Perfil</a>
+    <a href="/logout" style="color: #ef4444;">Sair</a>
   </nav>
+</nav>
 <% } %>

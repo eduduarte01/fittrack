@@ -1,41 +1,40 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../../config/database");
+const User = require("../user/userModel"); // Importar o modelo User
+const Workout = require("../workout/workoutModel"); // Importar o modelo Workout
 
-const User = require('../user/userModel');
-const Workout = require('../workout/workoutModel');
-
-const Comment = sequelize.define('Comment', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+const Comment = sequelize.define("Comment", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User, // Referência direta ao modelo User
+      key: "id",
     },
-    content: {
-        type: DataTypes.TEXT,
-        allowNull: false
+  },
+  workout_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Workout, // Referência direta ao modelo Workout
+      key: "id",
     },
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
-    },
-    workout_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Workouts',
-            key: 'id'
-        }
-    }
+  },
 });
 
-User.hasMany(Comment, { foreignKey: 'user_id' });
-Workout.hasMany(Comment, { foreignKey: 'workout_id' });
+Comment.belongsTo(User, { foreignKey: "user_id", as: "user" });
+Comment.belongsTo(Workout, { foreignKey: "workout_id", as: "workout" });
 
-Comment.belongsTo(User, { foreignKey: 'user_id' });
-Comment.belongsTo(Workout, { foreignKey: 'workout_id' });
+User.hasMany(Comment, { foreignKey: "user_id", as: "comments" });
+Workout.hasMany(Comment, { foreignKey: "workout_id", as: "comments" });
 
 module.exports = Comment;
