@@ -16,49 +16,27 @@
         />
         <div class="avatar-actions">
           <label for="profilePicture" class="btn btn-outline">Trocar foto</label>
-          <input
-            type="file"
-            id="profilePicture"
-            name="profilePicture"
-            accept="image/*"
-            class="file-input"
-          />
+          <input type="file" id="profilePicture" name="profilePicture" accept="image/*" class="file-input" />
           <span class="hint">JPG ou PNG, até 2MB</span>
         </div>
       </div>
 
       <div class="form-group">
         <label for="username">Nome de Usuário</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Ex: joao_fit"
-          value="<%= (typeof user !== 'undefined' && user.username) ? user.username : '' %>"
-          required
-        />
+        <input type="text" id="username" name="username" placeholder="Ex: joao_fit"
+          value="<%= (typeof user !== 'undefined' && user.username) ? user.username : '' %>" required />
       </div>
 
       <div class="form-group">
         <label for="fullName">Nome Completo</label>
-        <input
-          type="text"
-          id="fullName"
-          name="fullName"
-          placeholder="Seu nome completo"
-          value="<%= (typeof user !== 'undefined' && user.fullName) ? user.fullName : '' %>"
-        />
+        <input type="text" id="fullName" name="fullName" placeholder="Seu nome completo"
+          value="<%= (typeof user !== 'undefined' && user.fullName) ? user.fullName : '' %>" />
       </div>
 
       <div class="form-group">
         <label for="bio">Biografia</label>
-        <textarea
-          id="bio"
-          name="bio"
-          rows="4"
-          maxlength="255"
-          placeholder="Conte um pouco sobre você e seus objetivos..."
-        ><%= (typeof user !== 'undefined' && user.bio) ? user.bio : '' %></textarea>
+        <textarea id="bio" name="bio" rows="4" maxlength="255"
+          placeholder="Conte um pouco sobre você e seus objetivos..."><%= (typeof user !== 'undefined' && user.bio) ? user.bio : '' %></textarea>
         <span class="hint">Máximo de 255 caracteres</span>
       </div>
 

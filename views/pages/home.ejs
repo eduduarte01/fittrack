@@ -1,64 +1,53 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <%- include("../partials/head", { title: 'Home | FitTrack' }) %>
-</head>
-<body>
-  <%- include("../partials/navbar", { active: 'home' }) %>
+<main class="container">
+  <%- include('../partials/alerts') %>
 
-  <main class="container" style="padding-top: 40px;">
-    <%- include('../partials/alerts') %>
+  <section class="feed-hero">
+    <h1>Olá, <%= user.fullName || user.username %>! 👋</h1>
+    <p>Pronto para o treino de hoje?</p>
 
-    <!-- Hero Section -->
-    <section style="text-align: center; margin-bottom: 50px;">
-      <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Olá, <%= user.fullName || user.username %>!</h1>
-      <p style="color: var(--gray-text);">Pronto para o treino de hoje?</p>
-      
-      <form action="/feed" method="GET" style="margin-top: 30px; display: flex; gap: 10px; max-width: 600px; margin-left: auto; margin-right: auto;">
-        <input type="text" name="q" placeholder="Buscar por nome ou descrição..." value="<%= q %>" style="flex: 1; padding: 12px; border-radius: 8px; background: var(--black-input); border: 1px solid #374151; color: white;">
-        <button type="submit" class="btn">Buscar</button>
-      </form>
-    </section>
+    <form action="/feed" method="GET" class="search-bar">
+      <input type="text" name="q" placeholder="Buscar por nome ou descrição..." value="<%= q %>">
+      <button type="submit" class="btn">Buscar</button>
+    </form>
+  </section>
 
-    <!-- Categorias -->
-    <section style="margin-bottom: 40px;">
-      <h2 style="margin-bottom: 20px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Categorias</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-        <a href="/feed" class="btn <%= !selectedCategory ? '' : 'btn-outline' %>" style="padding: 5px 15px; font-size: 0.85rem;">Todas</a>
-        <% categories.forEach(function(cat) { %>
-          <a href="/feed?category=<%= cat.id %>" class="btn <%= String(selectedCategory) === String(cat.id) ? '' : 'btn-outline' %>" style="padding: 5px 15px; font-size: 0.85rem;">
-            <%= cat.name %>
-          </a>
-        <% }) %>
-      </div>
-    </section>
+  <section>
+    <p class="section-title" style="margin-bottom: 14px;">Categorias</p>
+    <div class="chip-row">
+      <a href="/feed" class="chip <%= !selectedCategory ? 'active' : '' %>">Todas</a>
+      <% categories.forEach(function(cat) { %>
+        <a href="/feed?category=<%= cat.id %>" class="chip <%= String(selectedCategory) === String(cat.id) ? 'active' : '' %>">
+          <%= cat.name %>
+        </a>
+      <% }) %>
+    </div>
+  </section>
 
-    <!-- Treinos -->
-    <section>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Seus Treinos</h2>
-        <a href="/workouts/create" class="btn btn-outline" style="font-size: 0.8rem;">+ Criar Treino</a>
-      </div>
+  <section>
+    <div class="section-header">
+      <p class="section-title">Seus Treinos</p>
+      <a href="/workouts/create" class="btn btn-outline btn-sm">+ Criar Treino</a>
+    </div>
 
-      <div class="workout-grid">
-        <% if (workouts.length > 0) { %>
-          <% workouts.forEach(function(w) { %>
-            <article class="workout-card">
-              <p class="meta"><%= w.category ? w.category.name : 'Geral' %></p>
-              <h3><%= w.title %></h3>
-              <p style="color: var(--gray-text); font-size: 0.9rem; margin-bottom: 20px;">
-                <%= w.description ? w.description.substring(0, 100) + '...' : 'Sem descrição.' %>
-              </p>
+    <div class="workout-grid">
+      <% if (workouts.length > 0) { %>
+        <% workouts.forEach(function(w) { %>
+          <article class="workout-card">
+            <p class="meta"><%= w.category ? w.category.name : 'Geral' %></p>
+            <h3><%= w.title %></h3>
+            <p class="card-desc">
+              <%= w.description ? w.description.substring(0, 100) + (w.description.length > 100 ? '...' : '') : 'Sem descrição.' %>
+            </p>
+            <div class="actions">
               <a href="/workouts/<%= w.id %>" class="btn btn-block">Ver Detalhes</a>
-            </article>
-          <% }) %>
-        <% } else { %>
-          <p style="color: var(--gray-text); text-align: center; grid-column: 1/-1; padding: 40px;">Nenhum treino encontrado.</p>
-        <% } %>
-      </div>
-    </section>
-  </main>
-
-  <%- include("../partials/footer") %>
-</body>
-</html>
+            </div>
+          </article>
+        <% }) %>
+      <% } else { %>
+        <div class="empty-state">
+          <p>Nenhum treino encontrado. Que tal <a href="/workouts/create">criar o primeiro</a>?</p>
+        </div>
+      <% } %>
+    </div>
+  </section>
+</main>
