@@ -39,8 +39,18 @@
               <%= w.description ? w.description.substring(0, 100) + (w.description.length > 100 ? '...' : '') : 'Sem descrição.' %>
             </p>
             <div class="actions">
+              <a href="/workouts/<%= w.id %>/edit" class="btn btn-outline">Editar</a>
+              <a href="/workouts/<%= w.id %>" class="btn btn-outline">Ver</a>
+              <form 
+              action="/workouts/<%= w.id%> /delete"
+              method="post"
+              class="inline-form"
+              onsubmit="return confirm('tem certeza que deseja excluir este treino ?');
+              " > 
+              <button type="submit" class="btn btn-danger">excluir</button></form>
               <a href="/workouts/<%= w.id %>" class="btn btn-block">Ver Detalhes</a>
             </div>
+            <img src="/uploads/<%= w.capa %>" alt="Capa" style="width: 100%; border-radius: 8px;">
           </article>
         <% }) %>
       <% } else { %>

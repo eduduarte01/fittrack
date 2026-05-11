@@ -90,13 +90,12 @@ exports.getProfile = async (userId) => {
 
 exports.updateProfile = async (req,res) => {
     try {
-        const {fullName, bio, username} = req.body; // Capturar username
+        const {fullName, bio, username} = req.body; 
         const userId = req.session.user.id;
 
         const updateData = {fullName, bio};
 
         if(username) {
-            // Verificar se o novo username já existe e não pertence ao usuário atual
             const existingUserWithUsername = await User.findOne({ where: { username, id: { [Op.ne]: userId } } });
             if (existingUserWithUsername) {
                 req.flash("error", "Este nome de usuário já está em uso por outro usuário.");

@@ -23,16 +23,19 @@ exports.createWorkout = async (req, res) => {
     const { title, description, video_url, category_id } = req.body;
     const userId = req.session.user.id; // Obter ID do usuário da sessão
 
+    const capa = req.file ? req.file.filename : null;
+
     await Workout.create({
       title,
       description,
       video_url,
       category_id,
+      capa,
       created_by: userId, // Associar o treino ao usuário logado
     });
 
     req.flash("success", "Treino criado com sucesso!");
-    res.redirect("/workouts"); // Redirecionar para a lista de treinos
+    res.redirect("/feed"); // Redirecionar para a lista de treinos
   } catch (error) {
     console.error(error);
     req.flash("error", "Erro ao criar treino.");
@@ -46,7 +49,7 @@ exports.listWorkouts = async (req, res) => {
       include: [{ model: Category, as: "category" }],
     });
 
-    res.render("pages/workouts", {
+    res.render("pages/home", {
       title: "Treinos | FitTrack",
       workouts, // Passando a variável workouts para a view
       messages: req.flash(),
@@ -67,7 +70,7 @@ exports.showWorkoutDetails = async (req, res) => {
 
     if (!workout) {
       req.flash("error", "Treino não encontrado.");
-      return res.redirect("/workouts");
+      return res.redirect("/feed");
     }
 
     res.render("pages/workout-details", {
@@ -79,6 +82,28 @@ exports.showWorkoutDetails = async (req, res) => {
   } catch (error) {
     console.error(error);
     req.flash("error", "Erro ao carregar detalhes do treino.");
-    res.redirect("/workouts");
+    res.redirect("/feed");
+  }
+};
+
+exports.deleteWorkout = async (req, res) => {
+  try{
+    const {id} = req.params;
+
+    const workout = await Workout.findByPk(id);
+
+    if(!workout){
+      req.flash("error" , "Treino n ao encontrado.");
+      return res.redirect("/feed");
+    }
+    await workout.destroy();
+
+    req.flash("success", "Treino excluido com sucesso.");
+    res.redirect("/feed");
+    
+  }catch(error){
+    console.error("erro ao deletar :" , error);
+    req.flash("error", "erro ao excluir o treino.");
+    res.redirect("/feed");
   }
 };

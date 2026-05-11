@@ -13,6 +13,10 @@ const Workout = sequelize.define("Workout", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  capa : {
+    type : DataTypes.STRING,
+    allowNull : true
+  },
   description: {
     type: DataTypes.TEXT,
     allowNull: false,

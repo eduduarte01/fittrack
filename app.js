@@ -93,12 +93,10 @@ async function initializeDatabase() {
     console.log("Conexão com o banco de dados estabelecida com sucesso.");
     // Use { alter: true } para atualizar tabelas existentes sem perder dados
     // Em produção, considere um sistema de migração mais robusto
-    await sequelize.sync();
+    await sequelize.sync({alter : true});
     console.log("Banco de dados sincronizado!");
   } catch (err) {
     console.error("Erro ao conectar ou sincronizar o banco de dados:", err);
-    // Não encerra o processo aqui, mas as operações de DB falharão
-    // Em produção, você pode querer encerrar o processo: process.exit(1);
   }
 }
 

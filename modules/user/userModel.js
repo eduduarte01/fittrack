@@ -5,8 +5,8 @@ const User = sequelize.define(
   "User",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    username: { type: DataTypes.STRING, allowNull: false }, // Removido unique aqui
-    email: { type: DataTypes.STRING, allowNull: false, validate: { isEmail: true } }, // Removido unique aqui
+    username: { type: DataTypes.STRING, allowNull: false }, 
+    email: { type: DataTypes.STRING, allowNull: false, validate: { isEmail: true } }, 
     password: { type: DataTypes.STRING, allowNull: false },
     fullName: { type: DataTypes.STRING, allowNull: true },
     bio: { type: DataTypes.STRING(255), allowNull: true },
