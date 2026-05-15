@@ -1,0 +1,27 @@
+<main class="container">
+  <div class="section-header">
+    <h1><%= title %></h1>
+    <a href="/workouts/create" class="btn btn-outline btn-sm">+ Criar Treino</a>
+  </div>
+
+  <div class="workout-grid">
+    <% if (workouts && workouts.length > 0) { %>
+      <% workouts.forEach(function(w) { %>
+        <article class="workout-card">
+          <p class="meta"><%= w.category ? w.category.name : "Sem categoria" %></p>
+          <h3><%= w.title %></h3>
+          <p class="card-desc">
+            <%= (w.description || "").substring(0, 120) %><%= (w.description || "").length > 120 ? "..." : "" %>
+          </p>
+          <div class="actions">
+            <a href="/workouts/<%= w.id %>" class="btn btn-block">Ver detalhes</a>
+          </div>
+        </article>
+      <% }) %>
+    <% } else { %>
+      <div class="empty-state">
+        <p>Nenhum treino encontrado.</p>
+      </div>
+    <% } %>
+  </div>
+</main>

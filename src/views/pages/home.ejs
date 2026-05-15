@@ -1,0 +1,63 @@
+<main class="container">
+  <%- include('../partials/alerts') %>
+
+  <section class="feed-hero">
+    <h1>Olá, <%= user.fullName || user.username %>! 👋</h1>
+    <p>Pronto para o treino de hoje?</p>
+
+    <form action="/feed" method="GET" class="search-bar">
+      <input type="text" name="q" placeholder="Buscar por nome ou descrição..." value="<%= q %>">
+      <button type="submit" class="btn">Buscar</button>
+    </form>
+  </section>
+
+  <section>
+    <p class="section-title" style="margin-bottom: 14px;">Categorias</p>
+    <div class="chip-row">
+      <a href="/feed" class="chip <%= !selectedCategory ? 'active' : '' %>">Todas</a>
+      <% categories.forEach(function(cat) { %>
+        <a href="/feed?category=<%= cat.id %>" class="chip <%= String(selectedCategory) === String(cat.id) ? 'active' : '' %>">
+          <%= cat.name %>
+        </a>
+      <% }) %>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <p class="section-title">Seus Treinos</p>
+      <a href="/workouts/create" class="btn btn-outline btn-sm">+ Criar Treino</a>
+    </div>
+
+    <div class="workout-grid">
+      <% if (workouts.length > 0) { %>
+        <% workouts.forEach(function(w) { %>
+          <article class="workout-card">
+            <p class="meta"><%= w.category ? w.category.name : 'Geral' %></p>
+            <h3><%= w.title %></h3>
+            <p class="card-desc">
+              <%= w.description ? w.description.substring(0, 100) + (w.description.length > 100 ? '...' : '') : 'Sem descrição.' %>
+            </p>
+            <div class="actions">
+              <a href="/workouts/<%= w.id %>/edit" class="btn btn-outline">Editar</a>
+              <a href="/workouts/<%= w.id %>" class="btn btn-outline">Ver</a>
+              <form 
+              action="/workouts/<%= w.id%> /delete"
+              method="post"
+              class="inline-form"
+              onsubmit="return confirm('tem certeza que deseja excluir este treino ?');
+              " > 
+              <button type="submit" class="btn btn-danger">excluir</button></form>
+              <a href="/workouts/<%= w.id %>" class="btn btn-block">Ver Detalhes</a>
+            </div>
+            <img src="/uploads/<%= w.capa %>" alt="Capa" style="width: 100%; border-radius: 8px;">
+          </article>
+        <% }) %>
+      <% } else { %>
+        <div class="empty-state">
+          <p>Nenhum treino encontrado. Que tal <a href="/workouts/create">criar o primeiro</a>?</p>
+        </div>
+      <% } %>
+    </div>
+  </section>
+</main>

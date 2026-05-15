@@ -1,0 +1,109 @@
+import Workout from './workoutModel.js';
+import Category from '../categoria/categoryModel.js';
+import User from '../user/userModel.js';
+
+export const showCreateForm = async (req, res) => {
+  try {
+    const categories = await Category.findAll();
+    res.render("pages/create-workout", {
+      title: "Criar Treino | FitTrack",
+      categories,
+      messages: req.flash(),
+      user: req.session.user || null,
+    });
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "Erro ao carregar formulário.");
+    res.redirect("/feed");
+  }
+};
+
+export const createWorkout = async (req, res) => {
+  try {
+    const { title, description, video_url, category_id } = req.body;
+    const userId = req.session.user.id;
+
+    const capa = req.file ? req.file.filename : null;
+
+    await Workout.create({
+      title,
+      description,
+      video_url,
+      category_id,
+      capa,
+      created_by: userId,
+    });
+
+    req.flash("success", "Treino criado com sucesso!");
+    res.redirect("/feed");
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "Erro ao criar treino.");
+    res.redirect("/workouts/create");
+  }
+};
+
+export const listWorkouts = async (req, res) => {
+  try {
+    const workouts = await Workout.findAll({
+      include: [{ model: Category, as: "category" }],
+    });
+
+    res.render("pages/home", {
+      title: "Treinos | FitTrack",
+      workouts,
+      messages: req.flash(),
+      user: req.session.user || null,
+    });
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "Erro ao carregar treinos.");
+    res.redirect("/feed");
+  }
+};
+
+export const showWorkoutDetails = async (req, res) => {
+  try {
+    const workout = await Workout.findByPk(req.params.id, {
+      include: [{ model: Category, as: "category" }],
+    });
+
+    if (!workout) {
+      req.flash("error", "Treino não encontrado.");
+      return res.redirect("/feed");
+    }
+
+    res.render("pages/workout-details", {
+      title: workout.title,
+      workout,
+      messages: req.flash(),
+      user: req.session.user || null,
+    });
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "Erro ao carregar detalhes do treino.");
+    res.redirect("/feed");
+  }
+};
+
+export const deleteWorkout = async (req, res) => {
+  try{
+    const {id} = req.params;
+
+    const workout = await Workout.findByPk(id);
+
+    if(!workout){
+      req.flash("error" , "Treino n ao encontrado.");
+      return res.redirect("/feed");
+    }
+    await workout.destroy();
+
+    req.flash("success", "Treino excluido com sucesso.");
+    res.redirect("/feed");
+    
+  }catch(error){
+    console.error("erro ao deletar :" , error);
+    req.flash("error", "erro ao excluir o treino.");
+    res.redirect("/feed");
+  }
+};

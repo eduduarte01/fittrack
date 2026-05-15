@@ -1,0 +1,48 @@
+<main class="container" style="max-width: 640px;">
+  <div class="card profile-card">
+    <h1>Criar Novo Treino</h1>
+    <p class="subtitle">Preencha os detalhes abaixo para salvar seu treino.</p>
+
+    <%- include('../partials/alerts') %>
+
+    <form action="/workouts/create" method="POST" enctype="multipart/form-data">
+      
+      <div class="form-group">
+        <label for="title">Título do Treino</label>
+        <input type="text" id="title" name="title" placeholder="Ex: Hipertrofia de Peitoral" required />
+      </div>
+
+      <div class="form-group">
+        <label for="category_id">Categoria</label>
+        <select id="category_id" name="category_id" required>
+          <option value="">Selecione uma categoria...</option>
+          <% categories.forEach(function(cat) { %>
+            <option value="<%= cat.id %>"><%= cat.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="capa">Foto de Capa do Treino</label>
+        <input type="file" id="capa" name="capa" accept="image/*" />
+        <span class="hint">Escolha uma foto do seu computador.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrição / Exercícios</label>
+        <textarea id="description" name="description" rows="5" placeholder="Liste os exercícios, séries e repetições..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="video_url">Link do Vídeo (YouTube Embed)</label>
+        <input type="text" id="video_url" name="video_url" placeholder="https://www.youtube.com/embed/..." required />
+        <span class="hint">Dica: Use o link de 'Incorporar' do YouTube.</span>
+      </div>
+
+      <div class="form-actions">
+        <a href="/feed" class="btn btn-outline">Cancelar</a>
+        <button type="submit" class="btn">Salvar Treino</button>
+      </div>
+    </form>
+  </div>
+</main>
