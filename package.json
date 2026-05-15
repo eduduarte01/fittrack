@@ -2,9 +2,10 @@
   "name": "fittrack",
   "version": "0.0.0",
   "private": true,
+
   "type": "module",
   "scripts": {
-"start": "node src/server.js",
+    "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "vitest",
     "test:run": "vitest run",

@@ -1,0 +1,43 @@
+<div class="auth-wrapper">
+  <div class="card auth-card">
+    <h1>Crie sua conta</h1>
+    <p class="subtitle">Comece a registrar seus treinos hoje</p>
+
+    <%- include('../partials/alerts') %>
+
+    <form action="/register" method="POST">
+      <div class="form-group">
+        <label for="fullName">Nome Completo</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Seu nome completo" required />
+      </div>
+
+      <div class="form-group">
+        <label for="username">Usuário</label>
+        <input type="text" id="username" name="username" placeholder="Ex: joao_fit" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="voce@email.com" required />
+      </div>
+
+      <div class="group-row">
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required />
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-block">Criar conta</button>
+    </form>
+
+    <p class="footer-link">
+      Já tem conta? <a href="/login">Entrar</a>
+    </p>
+  </div>
+</div>
