@@ -1,4 +1,4 @@
-# FitTrack
+# FitTrack(App de treinos)
 
 Aplicação web para acompanhamento de treinos, construída com Node.js, Express, EJS e Sequelize.
 
