@@ -6,7 +6,7 @@
 **Versão do plano:** 1.0  
 **Situação:** plano inicial do projeto
 
-## 1. Objetivo e escopo
+## 1. Objetivo/escopo
 
 Este plano define como identificar, versionar, revisar, proteger e liberar os itens de configuração do FitTrack. Aplica-se ao código-fonte, testes, dependências, documentação e configurações necessárias para executar a aplicação. Seu propósito é manter histórico rastreável e reduzir o risco de alterações acidentais ou não revisadas na versão principal.
 
