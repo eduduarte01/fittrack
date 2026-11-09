@@ -1,0 +1,25 @@
+# Evidência: push direto para main rejeitado
+
+**Data:** 2026-11-09 (horário da sessão: aproximadamente 18:36, America/Sao_Paulo)  
+**Repositório:** `eduduarte01/fittrack`  
+**Branch protegida:** `main`  
+**Teste:** criado localmente um commit vazio de teste (`afdbdd6`) a partir do `origin/main` e tentado enviá-lo diretamente para `main`. O push foi rejeitado; nenhum commit de teste foi publicado e a branch local temporária foi removida.
+
+Comando de publicação testado:
+
+```text
+git push origin HEAD:main
+```
+
+Resposta literal do GitHub:
+
+```text
+remote: error: GH006: Protected branch update failed for refs/heads/main.
+remote:
+remote: - Changes must be made through a pull request.
+To https://github.com/eduduarte01/fittrack.git
+ ! [remote rejected] HEAD -> main (protected branch hook declined)
+error: failed to push some refs to 'https://github.com/eduduarte01/fittrack.git'
+```
+
+Essa evidência comprova a recusa do push direto após a ativação da proteção da branch. A regra também exige pull request e uma aprovação; a configuração pode ser consultada em **Settings → Branches → main**.
